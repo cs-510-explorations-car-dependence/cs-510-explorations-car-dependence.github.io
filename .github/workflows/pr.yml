@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: build site
+    name: Build Site
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
@@ -16,3 +16,15 @@ jobs:
         node-version: '16.5'
     - run: npm install
     - run: npm run build
+
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16.5'
+    - run: npm install
+    - run: npm run test
+
