@@ -5,14 +5,14 @@ on:
     paths-ignore:
       - '**.md'
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
-      name: build site
-      steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16.5'
-      - run: npm install
-      - run: npm run build
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build site
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16.5'
+    - run: npm install
+    - run: npm run build
