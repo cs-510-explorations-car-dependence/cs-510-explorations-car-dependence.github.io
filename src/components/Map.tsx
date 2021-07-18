@@ -20,6 +20,7 @@ function Map({ children = null }: MapProps) {
         width: "100vw",
         height: "100vh",
       }}
+      preferCanvas // necessary for jest testing, SVG not well supported
       center={PORTLAND_LAT_LON}
       zoom={13}
     >
