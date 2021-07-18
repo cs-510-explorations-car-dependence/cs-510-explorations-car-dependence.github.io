@@ -1,5 +1,5 @@
 import React from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, MapContainerProps, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLngExpression } from "leaflet";
 
@@ -9,20 +9,15 @@ const ATTRIBUTION =
   '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a>Contributors"';
 const PORTLAND_LAT_LON = [45.5051, -122.675] as LatLngExpression;
 
-type MapProps = {
-  children?: React.ReactNode;
-};
+type MapProps = {} & MapContainerProps;
 
-function Map({ children = null }: MapProps) {
+function Map({ children, ...props }: MapProps) {
   return (
     <MapContainer
-      style={{
-        width: "100vw",
-        height: "100vh",
-      }}
       preferCanvas // necessary for jest testing, SVG not well supported
       center={PORTLAND_LAT_LON}
       zoom={13}
+      {...props}
     >
       {children}
       {/* Map Tiles */}
