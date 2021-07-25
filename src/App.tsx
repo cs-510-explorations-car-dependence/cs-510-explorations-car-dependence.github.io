@@ -8,7 +8,7 @@ const MAP_FILL_SCREEN_STYLE = { width: "100vw", height: "100vh" };
 class App extends Component {
   state = {
     error: false,
-    isLoaded:  false,
+    loading:  true,
     routes: []
   };
 
@@ -19,14 +19,14 @@ class App extends Component {
       .then(
         (res) => {
           this.setState({
-            isLoaded: true,
+            loading: false,
             routes: res.route
           });
           console.log(res);
         },
         (err) => {
           this.setState({
-            isLoaded: true,
+            loading: false,
             error: true
           });
           console.log(err);
@@ -35,24 +35,22 @@ class App extends Component {
   }
 
   render() {
-    const { error, isLoaded, routes } = this.state;
-    if (error) {
-      return <div>Error</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <div className="App">
-          <Map style={MAP_FILL_SCREEN_STYLE}>
+    const { error, loading, routes } = this.state;
+    return (
+      <div className="App">
+        <Map style={MAP_FILL_SCREEN_STYLE}>
+          {loading && <div>Loading...</div>}
+          {!loading && !error &&
             <Polyline positions={routes}>
               <Tooltip direction="bottom" offset={[0, 20]} permanent>
                 Test tooltip
               </Tooltip>
             </Polyline>
-          </Map>
-        </div>
-      );
-    }
+          }
+          {error && <div>Error message</div>}
+        </Map>
+      </div>
+    );
   }
 }
 
