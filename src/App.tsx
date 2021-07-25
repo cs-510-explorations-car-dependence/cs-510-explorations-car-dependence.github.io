@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Map from "./components/Map";
 import "./App.css";
 import { Polyline, Tooltip } from "react-leaflet";
-import { LatLngExpression } from "leaflet";
 
 const MAP_FILL_SCREEN_STYLE = { width: "100vw", height: "100vh" };
 
