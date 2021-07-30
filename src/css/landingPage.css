@@ -1,0 +1,39 @@
+nav {
+    display: flex;
+    background-color: rgb(0, 21, 41);
+    color: white;
+    align-items: center;
+    height: 70px;
+}
+
+.navs {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    width: 100%;
+    margin-right: 30px;
+    align-items: center;
+    margin: 0;
+}
+
+.navs li {
+  margin: 0 20px;
+}
+
+.navs li:not(.navs li:last-child){
+  padding: 20px;
+}
+
+.navs li:last-child{
+  margin-left: 40px;
+}
+
+.navs li:hover{
+  background-color:rgba(0,0,0,0.5);
+  border-radius: 0.5em;
+}
+
+.navs li a:hover {
+  color: rgb(142, 241, 142) !important;  
+}
+
