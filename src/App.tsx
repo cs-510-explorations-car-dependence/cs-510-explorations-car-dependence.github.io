@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Map from "./components/Map";
 import "./App.css";
 import { Map as LeafletMapData } from "leaflet";
 import { LatLngExpression } from "leaflet";
-import { IfPending, IfFulfilled, IfRejected } from "react-async";
 import MapApiDataLayer from "./components/MapDataLayer";
 
-// TODO
-// const API_URL = "https://car-dependence-backend.herokuapp.com/api/route/";
-// const API_URL = "https://jsonplaceholder.typicode.com/todos/";
-const API_URL = "https://httpbin.org/post";
+const API_URL =
+  process.env.NODE_ENV === "production" || !process.env.REACT_APP_API_URL
+    ? "https://car-dependence-backend.herokuapp.com/api/route/"
+    : process.env.REACT_APP_API_URL;
 
+console.info(`Using API URL: ${API_URL}`);
+
+// Fill screen
 const MAP_FILL_SCREEN_STYLE = { width: "100vw", height: "100vh" };
 
-// Portland
+// Default values (Portland)
 const INITIAL_LAT_LON = [45.5051, -122.675] as LatLngExpression;
 const INITIAL_ZOOM = 13;
 
 function App() {
+  // gets initiated by React-Leaflet in whenCreated
   const [mapState, setMapState] = useState(null as LeafletMapData | null);
 
   return (
@@ -26,6 +29,7 @@ function App() {
         style={MAP_FILL_SCREEN_STYLE}
         center={INITIAL_LAT_LON}
         zoom={INITIAL_ZOOM}
+        // sets up the useState hook
         whenCreated={setMapState}
       >
         {mapState && <MapApiDataLayer mapState={mapState} url={API_URL} />}

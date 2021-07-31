@@ -1,7 +1,6 @@
 import React from "react";
 import { MapContainer, MapContainerProps, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { LatLngExpression } from "leaflet";
 
 const URL =
   "https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png";

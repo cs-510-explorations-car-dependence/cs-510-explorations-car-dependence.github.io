@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { Map, LatLngBounds } from "leaflet";
+import { Map } from "leaflet";
 
 function getBBox(map: Map) {
   if (!map) return null;
@@ -18,10 +18,11 @@ function useBBox(map: Map) {
   }, [map]);
 
   useEffect(() => {
-    if (!map) return;
-    map.on("move", onMove);
+    map.on("moveend", onMove);
+    map.on("zoomend", onMove);
     return () => {
-      map.off("move", onMove);
+      map.off("moveend", onMove);
+      map.off("zoomend", onMove);
     };
   }, [map, onMove]);
 
