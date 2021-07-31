@@ -16,7 +16,13 @@ type ServerResponse = {
   route: LatLngExpression[];
 } & Response;
 
-const API_URL = "https://car-dependence-backend.herokuapp.com/api/route/";
+// In production, talk to production. In development, prefer REACT_APP_API_URL variable
+// (e.g. from command `REACT_APP_API_URL=localhost:8000 npm start`)
+// Otherwise fall back to production server
+const API_URL =
+  process.env.NODE_ENV === "production" || !process.env.REACT_APP_API_URL
+    ? "https://car-dependence-backend.herokuapp.com/api/route/"
+    : process.env.REACT_APP_API_URL;
 
 const MAP_FILL_SCREEN_STYLE = { width: "100vw", height: "100vh" };
 
