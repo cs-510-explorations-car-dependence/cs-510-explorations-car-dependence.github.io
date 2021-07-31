@@ -21,7 +21,10 @@ function MapApiDataLayer({
   url: string;
   mapState: LeafletMapData;
 }) {
+  // lat/lon locations representing the corners of the visible map, dynamically updating
   const bbox = useBBox(mapState);
+
+  // Initialize backend communication
   const apiState: AsyncState<ApiServerResponse> = useFetch(url, {
     method: "POST",
     headers: { accept: "application/json" },

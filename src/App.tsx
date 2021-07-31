@@ -30,7 +30,7 @@ function App() {
         style={MAP_FILL_SCREEN_STYLE}
         center={INITIAL_LAT_LON}
         zoom={INITIAL_ZOOM}
-        // sets up the useState hook
+        // sets up the useState hook so we can monitor Leaflet state externally
         whenCreated={setMapState}
       >
         {mapState && <MapApiDataLayer mapState={mapState} url={API_URL} />}
