@@ -1,17 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
 import { Map } from "leaflet";
 
-export type BBox = [[number, number], [number, number]];
-
 // returns a bounding box in the lat/lon format we're using instead of Leaflet's default,
 // since it's also a valid Leaflet format and sends easier in the API request
 function getBBox(map: Map) {
   if (!map) return null;
-  const bounds = map.getBounds();
-  return [
-    [bounds.getNorth(), bounds.getWest()],
-    [bounds.getSouth(), bounds.getEast()],
-  ];
+  return map.getBounds();
 }
 
 // gets a bounding box and dynamically updates it based on the currently visible map
@@ -22,7 +16,7 @@ function useBBox(map: Map) {
     setBBox(getBBox(map));
   }, [map]);
 
-  // this adds the required event listeners and provides leaflet a function to clean up
+  // this adds the required event listeners
   useEffect(() => {
     map.on("moveend", onMove);
     map.on("zoomend", onMove);

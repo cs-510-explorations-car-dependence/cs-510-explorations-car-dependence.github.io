@@ -3,7 +3,7 @@ import Map from "./components/Map";
 import "./App.css";
 import { Map as LeafletMapData } from "leaflet";
 import { LatLngExpression } from "leaflet";
-import MapApiDataLayer from "./components/MapDataLayer";
+import MapApiDataLayer from "./components/MapDataLayer/MapDataLayer";
 
 // In production, talk to production. In development, prefer REACT_APP_API_URL variable
 // (e.g. from command `REACT_APP_API_URL=localhost:8000 npm start`)

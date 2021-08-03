@@ -1,39 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { LatLngExpression, Map as LeafletMapData } from "leaflet";
-import { Polyline, Tooltip, Popup } from "react-leaflet";
-import useBBox, { BBox } from "../../hooks/useBBox";
-import { useFetch, IfPending, IfRejected, AsyncState } from "react-async";
-import { interpolateViridis } from "d3";
-import BBoxData from "./BBoxData";
+import { Map as LeafletMapData, LatLngBounds } from "leaflet";
+import useBBox from "../../hooks/useBBox";
+import BBoxData from "./BBoxApiData";
 
 /*
-type ColorString = string;
-
-const determineSegmentColor = (
-  value: number,
-  min: number,
-  max: number
-): ColorString => {
-  const lerpedValue = (value - min) / (max - min);
-  return interpolateViridis(lerpedValue);
-};
-
-type SegmentInfo = {
-  CO2: number;
-  NOx: number;
-  PM10: number;
-  "PM2.5": number;
-  VOC: number;
-  shape: [number, number][];
-};
-
-type RoadInfo = {
-  road: string;
-  segments: SegmentInfo[];
-};
-type ApiServerResponse = RoadInfo[];
+  Tracks the map's bounding box, and triggers requests to the backend when it changes.
+  It does this through the BBoxData component, just by adding one. That component
+  talks to the backend directly.
 */
-
 function MapApiDataLayer({
   url,
   mapState,
@@ -43,14 +17,25 @@ function MapApiDataLayer({
 }) {
   // lat/lon locations representing the corners of the visible map, dynamically updating
   const bbox = useBBox(mapState);
-  const [requestedData, setRequestedData] = useState([bbox] as BBox[]);
+  const [requestedData, setRequestedData] = useState([bbox] as LatLngBounds[]);
+  console.log("requested data length", requestedData.length);
 
   useEffect(() => {
-    // saves old data, may be useful with some logic to make it smarter
-    setRequestedData((rData) => [...rData, bbox] as BBox[]);
-    // requests new data every time the map moves, feels pretty bad
-    // setRequestedData([bbox];
-  }, [bbox]);
+    // expect to update by default
+    let shouldUpdate = true;
+    // check if bbox is *entirely* contained within another single bbox
+    // more could be done to make it smarter about when it requests data
+    // but this alone helps a lot
+    requestedData.forEach((bb) => {
+      if (!bbox) throw new Error("bbox is null in requestedData update");
+      if (bb.contains(bbox)) {
+        console.log("bb contains bbox");
+        shouldUpdate = false;
+      }
+    });
+    if (!shouldUpdate) return;
+    setRequestedData((rData) => [...rData, bbox] as LatLngBounds[]);
+  });
 
   return (
     <>
