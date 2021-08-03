@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { Map } from "leaflet";
 
+export type BBox = [[number, number], [number, number]];
+
 // returns a bounding box in the lat/lon format we're using instead of Leaflet's default,
 // since it's also a valid Leaflet format and sends easier in the API request
 function getBBox(map: Map) {

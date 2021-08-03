@@ -22,14 +22,14 @@ This will start the development server.
 
 ## Running with local API server
 
-Set the `REACT_APP_API_SERVER` variable in your environment and it will be used
+Set the `REACT_APP_API_URL` variable in your environment and it will be used
 as the API server instead of the production server in development or testing
 environments.
 
 For example:
 
 ```bash
-REACT_APP_API_SERVER=https://localhost:9999 npm start
+REACT_APP_API_URL=https://localhost:9999 npm start
 ```
 
 ## Scripts
