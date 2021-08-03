@@ -71,7 +71,11 @@ function BBoxData({ url, bbox }: { url: string; bbox: LatLngBounds }) {
               <Polyline
                 positions={segment.shape}
                 key={i * apiState.data.length + j}
-                color={determineSegmentColor(segment[VIS_DATA_FIELD], 0, 4)}
+                color={determineSegmentColor(
+                  segment[VIS_DATA_FIELD],
+                  VIS_MIN,
+                  VIS_MAX
+                )}
               >
                 {/* Mouseover tooltip data*/}
                 <Tooltip>

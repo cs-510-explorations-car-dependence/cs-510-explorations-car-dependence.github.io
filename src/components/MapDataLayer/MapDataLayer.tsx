@@ -18,24 +18,25 @@ function MapApiDataLayer({
   // lat/lon locations representing the corners of the visible map, dynamically updating
   const bbox = useBBox(mapState);
   const [requestedData, setRequestedData] = useState([bbox] as LatLngBounds[]);
-  console.log("requested data length", requestedData.length);
 
   useEffect(() => {
     // expect to update by default
     let shouldUpdate = true;
     // check if bbox is *entirely* contained within another single bbox
-    // more could be done to make it smarter about when it requests data
+    // TODO
+    // a lot more could be done to make it smarter about knowing when it has all
+    // required data on screen, or requesting only sections of a screen
     // but this alone helps a lot
     requestedData.forEach((bb) => {
       if (!bbox) throw new Error("bbox is null in requestedData update");
-      if (bb.contains(bbox)) {
-        console.log("bb contains bbox");
-        shouldUpdate = false;
-      }
+      if (bb.contains(bbox)) shouldUpdate = false;
     });
+
+    // all expected data is already displayed on the map, no need to request more
     if (!shouldUpdate) return;
+
     setRequestedData((rData) => [...rData, bbox] as LatLngBounds[]);
-  });
+  }, [requestedData, bbox]);
 
   return (
     <>

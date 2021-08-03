@@ -16,7 +16,7 @@ function useBBox(map: Map) {
     setBBox(getBBox(map));
   }, [map]);
 
-  // this adds the required event listeners
+  // adds the required event listeners for Leaflet to handle this properly
   useEffect(() => {
     map.on("moveend", onMove);
     map.on("zoomend", onMove);
