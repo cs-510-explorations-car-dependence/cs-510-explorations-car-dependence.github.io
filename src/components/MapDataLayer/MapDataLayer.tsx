@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Map as LeafletMapData, LatLngBounds } from "leaflet";
 import useBBox from "../../hooks/useBBox";
-import BBoxData from "./BBoxApiData";
+import BBoxApiData from "./BBoxApiData";
 
 /*
   Tracks the map's bounding box, and triggers requests to the backend when it changes.
@@ -36,12 +36,23 @@ function MapApiDataLayer({
     if (!shouldUpdate) return;
 
     setRequestedData((rData) => [...rData, bbox] as LatLngBounds[]);
-  }, [requestedData, bbox]);
+  }, [bbox]);
+
+  const removeBBoxData = (bb: LatLngBounds) => {
+    var bboxIndex = requestedData.indexOf(bb);
+    setRequestedData((rData) => [...rData].splice(bboxIndex, 1));
+  };
 
   return (
     <>
       {requestedData.map((bb, i) => (
-        <BBoxData url={url} bbox={bb} key={i} />
+        <BBoxApiData
+          url={url}
+          // view={bbox}
+          dataBBox={bb}
+          key={i}
+          remove={() => removeBBoxData(bb)}
+        />
       ))}
     </>
   );
