@@ -24,7 +24,7 @@ export default class Title extends Component{
                     alt="ismyroadfreshlogo"
                 />
                 <div>
-                    <button className="btn btn-success">Let's roll</button>
+                    <button className="btn btn-success" onClick={() => this.props.action(55)}>Let's roll</button>
                 </div>
 
             </div>
