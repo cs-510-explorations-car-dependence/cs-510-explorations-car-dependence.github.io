@@ -14,7 +14,7 @@ const VIS_MAX = 4;
 // Not binding, just a string, named only to show taht it's intended to be a color.
 type ColorString = string;
 
-const requestHeaders = {
+const REQUEST_HEADERS = {
   method: "GET",
   mode: "cors",
   headers: {
@@ -60,11 +60,11 @@ function BBoxApiData({
   dataBBox: LatLngBounds;
   remove: () => void;
 }) {
-  const request = `${url}/api/v1/bbox/?ul=${dataBBox.getNorth()},${dataBBox.getWest()}&br=${dataBBox.getSouth()},${dataBBox.getEast()}`;
+  const request = `${url}/api/v1/bbox?ul=${dataBBox.getNorth()},${dataBBox.getWest()}&br=${dataBBox.getSouth()},${dataBBox.getEast()}`;
   // Initialize backend communication
   const apiState: AsyncState<ApiServerResponse> = useFetch(
     request,
-    requestHeaders
+    REQUEST_HEADERS
   );
 
   // Check if should be removed

@@ -20,6 +20,7 @@ function MapApiDataLayer({
   const [requestedData, setRequestedData] = useState([bbox] as LatLngBounds[]);
 
   useEffect(() => {
+    /*
     // expect to update by default
     let shouldUpdate = true;
     // check if bbox is *entirely* contained within another single bbox
@@ -36,6 +37,8 @@ function MapApiDataLayer({
     if (!shouldUpdate) return;
 
     setRequestedData((rData) => [...rData, bbox] as LatLngBounds[]);
+    */
+    setRequestedData((rData) => [bbox] as LatLngBounds[]);
   }, [bbox]);
 
   const removeBBoxData = (bb: LatLngBounds) => {
@@ -51,6 +54,7 @@ function MapApiDataLayer({
           // view={bbox}
           dataBBox={bb}
           key={i}
+          // TODO this is a good idea but when the backend can't be reached it crashes hard
           remove={() => removeBBoxData(bb)}
         />
       ))}
