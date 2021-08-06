@@ -26,7 +26,7 @@ function MapApiDataLayer({
   const [requestedData, setRequestedData] = useState([bbox] as LatLngBounds[]);
 
   useEffect(() => {
-    // if (zoom < 13) return;
+    if (zoom < 13) return;
     /*
     // expect to update by default
     let shouldUpdate = true;
