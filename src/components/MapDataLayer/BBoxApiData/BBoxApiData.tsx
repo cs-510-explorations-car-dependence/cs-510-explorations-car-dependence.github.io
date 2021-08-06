@@ -31,20 +31,22 @@ const valueToViridisRange = (
   return interpolateViridis(lerpedValue);
 };
 
+type BBoxApiDataProps = {
+  url: string;
+  dataField: DataField;
+  dataBBox: LatLngBounds;
+  remove: () => void;
+  zoom: number;
+};
+
 function BBoxApiData({
   url,
   dataField,
   dataBBox,
   remove,
   zoom,
-}: {
-  url: string;
-  dataField: DataField;
-  dataBBox: LatLngBounds;
-  remove: () => void;
-  zoom: number;
-}) {
-  console.log("loading bbox");
+}: BBoxApiDataProps) {
+  console.log("loading bbox", { dataField });
   const request = `${url}/api/v1/bbox?ul=${dataBBox.getNorth()},${dataBBox.getWest()}&br=${dataBBox.getSouth()},${dataBBox.getEast()}`;
   // Initialize backend communication
   const apiState: AsyncState<ApiServerResponse> = useFetch(
@@ -55,8 +57,11 @@ function BBoxApiData({
   const valueToColor = (value: number) =>
     valueToViridisRange(value, VIS_MIN, VIS_MAX);
 
+  const renderLines = true;
+  const renderShapes = true;
+
   // Check if should be removed
-  if (apiState.isRejected) remove();
+  // if (apiState.isRejected) remove();
 
   return (
     <>
@@ -66,20 +71,27 @@ function BBoxApiData({
       <IfRejected state={apiState}>Error Message</IfRejected>
       {apiState.isFulfilled && apiState.data && (
         <>
-          <BBoxApiPolylines
-            apiStateData={apiState.data}
-            visDataField={dataField}
-            determineSegmentColor={valueToColor}
-          />
-          <BBoxApiIsoBands
-            apiStateData={apiState.data}
-            visDataField={dataField}
-            determineSegmentColor={valueToColor}
-          />
+          {renderLines && (
+            <BBoxApiPolylines
+              apiStateData={apiState.data}
+              visDataField={dataField}
+              determineSegmentColor={valueToColor}
+            />
+          )}
+          {renderShapes && (
+            <BBoxApiIsoBands
+              apiStateData={apiState.data}
+              visDataField={dataField}
+              determineSegmentColor={valueToColor}
+            />
+          )}
         </>
       )}
     </>
   );
 }
 
-export default React.memo(BBoxApiData);
+const propsChanged = (prev: BBoxApiDataProps, next: BBoxApiDataProps) =>
+  prev.dataBBox.equals(next.dataBBox) && prev.dataField === next.dataField;
+
+export default React.memo(BBoxApiData, propsChanged);

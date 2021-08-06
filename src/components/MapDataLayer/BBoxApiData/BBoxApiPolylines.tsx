@@ -24,7 +24,7 @@ function BBoxApiPolylines({
               /* Road line segments */
               <Polyline
                 positions={segment.shape}
-                key={i * apiStateData.length + j}
+                key={visDataField + "__" + (i * apiStateData.length + j)}
                 color={determineSegmentColor(segment[visDataField])}
               >
                 {/* Mouseover tooltip data*/}

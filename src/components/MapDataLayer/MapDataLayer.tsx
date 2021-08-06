@@ -4,7 +4,8 @@ import useMapBBox from "../../hooks/useMapBBox";
 import BBoxApiData from "./BBoxApiData/BBoxApiData";
 import useMapZoom from "../../hooks/useMapZoom";
 import { useDataFieldSelection } from "./ApiServerResponse";
-import VisibleFieldControl from "./VisibleFieldControl";
+import VisibleFieldControl from "./VisibleFieldControl/VisibleFieldControl";
+import { interpolateRgbBasis } from "d3";
 
 /*
   Tracks the map's bounding box, and triggers requests to the backend when it changes.
@@ -55,11 +56,20 @@ function MapApiDataLayer({
 
   return (
     <>
-      <VisibleFieldControl
-        value={currentField}
-        setValue={setField}
-        allValues={fields}
-      />
+      <div
+        style={{
+          position: "absolute",
+          width: "500px",
+          left: "60px",
+          top: "10px",
+        }}
+      >
+        <VisibleFieldControl
+          value={currentField}
+          setValue={setField}
+          allValues={fields}
+        />
+      </div>
       {requestedData.map((bb, i) =>
         bb ? (
           <BBoxApiData

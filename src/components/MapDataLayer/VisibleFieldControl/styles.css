@@ -1,0 +1,49 @@
+.field-control-menu {
+  position: absolute;
+  z-index: 1000;
+  background: white;
+  margin: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.field-control-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.field-control-list-member {
+  float: left;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.field-control-list-member:last-child {
+  border-right: none;
+}
+
+.field-control-button {
+  margin: 0;
+  padding: 0;
+  width: 80px;
+  height: 30px;
+  border: none;
+  background: white;
+}
+
+.field-control-button:hover {
+  background: #eee;
+}
+
+.field-control-button-selected {
+  background: #0bc;
+  color: white;
+  font-weight: bold;
+}
+
+.field-control-button-selected:hover {
+  background: #0cd;
+}

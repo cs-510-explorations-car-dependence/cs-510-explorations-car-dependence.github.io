@@ -9,9 +9,9 @@ function useZoom(map: Map) {
   }, [map]);
 
   useEffect(() => {
-    map.on("zoomend", onZoom);
+    map.on("zoom", onZoom);
     return () => {
-      map.off("zoomend", onZoom);
+      map.off("zoom", onZoom);
     };
   }, [map, onZoom]);
 
