@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Map as LeafletMapData, LatLngBounds } from "leaflet";
-import useBBox from "../../hooks/useBBox";
-import BBoxApiData from "./BBoxApiData";
+import useMapBBox from "../../hooks/useMapBBox";
+import BBoxApiData from "./BBoxApiData/BBoxApiData";
+import useMapZoom from "../../hooks/useMapZoom";
+import { useDataFieldSelection } from "./ApiServerResponse";
+import VisibleFieldControl from "./VisibleFieldControl";
 
 /*
   Tracks the map's bounding box, and triggers requests to the backend when it changes.
@@ -16,10 +19,14 @@ function MapApiDataLayer({
   mapState: LeafletMapData;
 }) {
   // lat/lon locations representing the corners of the visible map, dynamically updating
-  const bbox = useBBox(mapState);
+  const bbox = useMapBBox(mapState);
+  const zoom = useMapZoom(mapState);
+  const { currentField, setField, fields } = useDataFieldSelection();
+
   const [requestedData, setRequestedData] = useState([bbox] as LatLngBounds[]);
 
   useEffect(() => {
+    // if (zoom < 13) return;
     /*
     // expect to update by default
     let shouldUpdate = true;
@@ -39,7 +46,7 @@ function MapApiDataLayer({
     setRequestedData((rData) => [...rData, bbox] as LatLngBounds[]);
     */
     setRequestedData((rData) => [bbox] as LatLngBounds[]);
-  }, [bbox]);
+  }, [bbox, zoom]);
 
   const removeBBoxData = (bb: LatLngBounds) => {
     var bboxIndex = requestedData.indexOf(bb);
@@ -48,16 +55,24 @@ function MapApiDataLayer({
 
   return (
     <>
-      {requestedData.map((bb, i) => (
-        <BBoxApiData
-          url={url}
-          // view={bbox}
-          dataBBox={bb}
-          key={i}
-          // TODO this is a good idea but when the backend can't be reached it crashes hard
-          remove={() => removeBBoxData(bb)}
-        />
-      ))}
+      <VisibleFieldControl
+        value={currentField}
+        setValue={setField}
+        allValues={fields}
+      />
+      {requestedData.map((bb, i) =>
+        bb ? (
+          <BBoxApiData
+            url={url}
+            zoom={zoom}
+            dataBBox={bb}
+            dataField={currentField}
+            key={i}
+            // TODO this is a good idea but when the backend can't be reached it crashes hard
+            remove={() => removeBBoxData(bb)}
+          />
+        ) : null
+      )}
     </>
   );
 }
