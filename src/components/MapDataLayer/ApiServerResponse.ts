@@ -1,21 +1,19 @@
 import { useState } from "react";
 
 export enum DataField {
+  CO = "CO",
   CO2 = "CO2",
   NOx = "NOx",
-  PM10 = "PM10",
   PM2P5 = "PM2.5",
-  VOC = "VOC",
 }
 
 export const useDataFieldSelection = () => {
   const [currentField, setField] = useState(DataField.CO2);
   const fields = [
     DataField.CO2,
+    DataField.CO,
     DataField.NOx,
-    DataField.PM10,
     DataField.PM2P5,
-    DataField.VOC,
   ];
   return {
     currentField,
@@ -25,21 +23,19 @@ export const useDataFieldSelection = () => {
 };
 
 export const dataFieldRanges = {
-  [DataField.CO2]: [0, 343270],
-  [DataField.NOx]: [0, 163],
-  [DataField.PM10]: [0, 10], // TODO
-  [DataField.PM2P5]: [0, 6],
-  [DataField.VOC]: [0, 10], // TODO
+  [DataField.CO]: [0, 811],
+  [DataField.CO2]: [0, 80000],
+  [DataField.NOx]: [0, 37.5],
+  [DataField.PM2P5]: [0, 1.38],
 };
 
 // Info corresponding to a road segment, which can have 1 or more line segments
 // defined in "shape", but only one set of emissions data.
 export type SegmentInfo = {
   [DataField.CO2]: number;
+  [DataField.CO]: number;
   [DataField.NOx]: number;
-  [DataField.PM10]: number;
   [DataField.PM2P5]: number;
-  [DataField.VOC]: number;
   shape: [number, number][];
 };
 
