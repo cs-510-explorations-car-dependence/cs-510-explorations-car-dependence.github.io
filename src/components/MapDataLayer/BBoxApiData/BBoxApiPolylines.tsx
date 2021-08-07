@@ -34,7 +34,7 @@ function BBoxApiPolylines({
                     if (dataField === "shape") return null;
                     return (
                       <div key={i}>
-                        <h4 className="field-name">{dataField}</h4>
+                        <h4 className="field-name">{dataField} (g / mi)</h4>
                         {segment[dataField as keyof SegmentInfo]}
                       </div>
                     );
