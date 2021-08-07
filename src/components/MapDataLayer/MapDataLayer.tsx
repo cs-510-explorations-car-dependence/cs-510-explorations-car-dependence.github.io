@@ -6,18 +6,18 @@ import useMapZoom from "../../hooks/useMapZoom";
 import { dataFieldRanges, useDataFieldSelection } from "./ApiServerResponse";
 import VisibleFieldControl from "./VisibleFieldControl";
 import Legend from "./Legend";
-import { interpolateViridis } from "d3";
+import { interpolateTurbo } from "d3";
 import WarningToast from "./WarningToast";
 
 const ZOOM_MIN = 13;
 
-const valueToViridisRange = (
+const valueToTurboRange = (
   value: number,
   min: number,
   max: number
 ): string => {
   const lerpedValue = (value - min) / (max - min);
-  return interpolateViridis(lerpedValue);
+  return interpolateTurbo(lerpedValue);
 };
 
 /*
@@ -72,7 +72,7 @@ function MapApiDataLayer({
   */
 
   const valueToColorFn = (value: number) =>
-    valueToViridisRange(value, min, max);
+    valueToTurboRange(value, min, max);
 
   return (
     <>
