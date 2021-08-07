@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Map as LeafletMapData, LatLngBounds } from "leaflet";
 import useMapBBox from "../../hooks/useMapBBox";
-import BBoxApiData from "./BBoxApiData/BBoxApiData";
+import BBoxApiData from "./BBoxApiData";
 import useMapZoom from "../../hooks/useMapZoom";
-import { useDataFieldSelection } from "./ApiServerResponse";
-import VisibleFieldControl from "./VisibleFieldControl/VisibleFieldControl";
-import { interpolateRgbBasis } from "d3";
+import { dataFieldRanges, useDataFieldSelection } from "./ApiServerResponse";
+import VisibleFieldControl from "./VisibleFieldControl";
+import Legend from "./Legend";
+import { interpolateViridis } from "d3";
+import WarningToast from "./WarningToast";
+
+const ZOOM_MIN = 13;
+
+const valueToViridisRange = (
+  value: number,
+  min: number,
+  max: number
+): string => {
+  const lerpedValue = (value - min) / (max - min);
+  return interpolateViridis(lerpedValue);
+};
 
 /*
   Tracks the map's bounding box, and triggers requests to the backend when it changes.
@@ -26,8 +39,10 @@ function MapApiDataLayer({
 
   const [requestedData, setRequestedData] = useState([bbox] as LatLngBounds[]);
 
+  const [min, max] = dataFieldRanges[currentField];
+
   useEffect(() => {
-    if (zoom < 13) return;
+    if (zoom < ZOOM_MIN) return;
     /*
     // expect to update by default
     let shouldUpdate = true;
@@ -49,10 +64,15 @@ function MapApiDataLayer({
     setRequestedData((rData) => [bbox] as LatLngBounds[]);
   }, [bbox, zoom]);
 
+  /*
   const removeBBoxData = (bb: LatLngBounds) => {
     var bboxIndex = requestedData.indexOf(bb);
     setRequestedData((rData) => [...rData].splice(bboxIndex, 1));
   };
+  */
+
+  const valueToColorFn = (value: number) =>
+    valueToViridisRange(value, min, max);
 
   return (
     <>
@@ -70,6 +90,26 @@ function MapApiDataLayer({
           allValues={fields}
         />
       </div>
+      <div
+        style={{
+          position: "absolute",
+          width: "408px",
+          left: "60px",
+          top: "40px",
+          zIndex: 1000,
+          height: "34px",
+        }}
+      >
+        <Legend
+          min={min}
+          max={max}
+          steps={10}
+          valueToColorFn={valueToColorFn}
+        />
+      </div>
+      {zoom < ZOOM_MIN && (
+        <WarningToast msg={"Warning: Zoomed out too far to load new data."} />
+      )}
       {requestedData.map((bb, i) =>
         bb ? (
           <BBoxApiData
@@ -79,7 +119,8 @@ function MapApiDataLayer({
             dataField={currentField}
             key={i}
             // TODO this is a good idea but when the backend can't be reached it crashes hard
-            remove={() => removeBBoxData(bb)}
+            // remove={() => removeBBoxData(bb)}
+            valueToColorFn={valueToColorFn}
           />
         ) : null
       )}

@@ -83,20 +83,22 @@ const createGeoJsonPoints = (
       roadInfo.segments.map((segment) =>
         segment.shape.map(([lat, lon]) => {
           const value = segment[dataField];
-          const pt = point([lon, lat], { value });
+          // const pt = point([lon, lat], { value });
+          return point([lon, lat], { value });
           // @ts-ignore
-          return centroid(pt, { value });
+          // return centroid(pt, { value });
         })
       )
     )
     .flat(2);
+  console.log(points);
   return featureCollection(points);
 };
 
 const createIsoBands = (
   geoJsonPoints: FeatureCollection<Point, Properties>
 ) => {
-  const breaks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const breaks = [0, 1, 2, 3, 4];
   const bands = isobands(geoJsonPoints, breaks, {
     zProperty: "value",
     breaksProperties: breaks.map((cbreak) => ({ cbreak })),
@@ -109,7 +111,7 @@ const createIsoBands = (
     if (!feature) return {};
     const rawValue = feature.properties!.cbreak;
     const value = Number(rawValue);
-    const color = "green";
+    const color = "red";
     return { color, fillColor: color, ...ISO_BAND_STYLE };
   };
 

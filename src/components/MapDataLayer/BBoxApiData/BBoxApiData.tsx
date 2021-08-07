@@ -7,13 +7,6 @@ import ApiServerResponse, { DataField } from "../ApiServerResponse";
 import BBoxApiPolylines from "./BBoxApiPolylines";
 import BBoxApiIsoBands from "./BBoxApiIsoBands";
 
-// numbers outside of this range will share the min/max color
-const VIS_MIN = 0;
-const VIS_MAX = 1;
-
-// Not binding, just a string, named only to show taht it's intended to be a color.
-type ColorString = string;
-
 const REQUEST_HEADERS = {
   method: "GET",
   mode: "cors",
@@ -22,29 +15,22 @@ const REQUEST_HEADERS = {
   },
 } as RequestInit;
 
-const valueToViridisRange = (
-  value: number,
-  min: number,
-  max: number
-): ColorString => {
-  const lerpedValue = (value - min) / (max - min);
-  return interpolateViridis(lerpedValue);
-};
-
 type BBoxApiDataProps = {
   url: string;
   dataField: DataField;
   dataBBox: LatLngBounds;
-  remove: () => void;
+  // remove: () => void;
   zoom: number;
+  valueToColorFn: (value: number) => string;
 };
 
 function BBoxApiData({
   url,
   dataField,
   dataBBox,
-  remove,
+  // remove,
   zoom,
+  valueToColorFn,
 }: BBoxApiDataProps) {
   console.log("loading bbox", { dataField });
   const request = `${url}/api/v1/bbox?ul=${dataBBox.getNorth()},${dataBBox.getWest()}&br=${dataBBox.getSouth()},${dataBBox.getEast()}`;
@@ -54,11 +40,9 @@ function BBoxApiData({
     REQUEST_HEADERS
   );
 
-  const valueToColor = (value: number) =>
-    valueToViridisRange(value, VIS_MIN, VIS_MAX);
-
   const renderLines = true;
-  const renderShapes = true;
+  // const renderShapes = true;
+  const renderShapes = false;
 
   // Check if should be removed
   // if (apiState.isRejected) remove();
@@ -75,14 +59,14 @@ function BBoxApiData({
             <BBoxApiPolylines
               apiStateData={apiState.data}
               visDataField={dataField}
-              determineSegmentColor={valueToColor}
+              determineSegmentColor={valueToColorFn}
             />
           )}
           {renderShapes && (
             <BBoxApiIsoBands
               apiStateData={apiState.data}
               visDataField={dataField}
-              determineSegmentColor={valueToColor}
+              determineSegmentColor={valueToColorFn}
             />
           )}
         </>

@@ -24,6 +24,14 @@ export const useDataFieldSelection = () => {
   };
 };
 
+export const dataFieldRanges = {
+  [DataField.CO2]: [0, 343270],
+  [DataField.NOx]: [0, 163],
+  [DataField.PM10]: [0, 10], // TODO
+  [DataField.PM2P5]: [0, 6],
+  [DataField.VOC]: [0, 10], // TODO
+};
+
 // Info corresponding to a road segment, which can have 1 or more line segments
 // defined in "shape", but only one set of emissions data.
 export type SegmentInfo = {
