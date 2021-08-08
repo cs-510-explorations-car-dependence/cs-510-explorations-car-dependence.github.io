@@ -1,6 +1,4 @@
-import { color } from "d3-color";
 import React from "react";
-import { isWhiteSpaceLike } from "typescript";
 import "./styles.css";
 
 const printValue = (value: number) => {
@@ -31,11 +29,11 @@ function Legend({
     colorRects.push(valueToColorFn(rectValue));
   }
   const rectWidth = 100 / (steps + 1);
-  console.log(colorRects);
   return (
     <div className="legend-bg">
       {colorRects.map((rectColor, i) => (
         <div
+          key={i}
           style={{
             position: "absolute",
             left: `${rectWidth * i}%`,

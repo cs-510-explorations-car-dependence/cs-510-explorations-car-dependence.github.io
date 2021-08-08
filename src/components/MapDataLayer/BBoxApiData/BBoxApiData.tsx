@@ -1,5 +1,4 @@
 import React from "react";
-import { interpolateViridis } from "d3";
 import { useFetch, IfPending, IfRejected, AsyncState } from "react-async";
 import { LatLngBounds } from "leaflet";
 import { Rectangle } from "react-leaflet";
@@ -32,7 +31,7 @@ function BBoxApiData({
   zoom,
   valueToColorFn,
 }: BBoxApiDataProps) {
-  console.log("loading bbox", { dataField });
+  // console.log("loading bbox", { dataField });
   const request = `${url}/api/v1/bbox?ul=${dataBBox.getNorth()},${dataBBox.getWest()}&br=${dataBBox.getSouth()},${dataBBox.getEast()}`;
   // Initialize backend communication
   const apiState: AsyncState<ApiServerResponse> = useFetch(

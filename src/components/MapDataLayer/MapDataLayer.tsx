@@ -11,11 +11,7 @@ import WarningToast from "./WarningToast";
 
 const ZOOM_MIN = 13;
 
-const valueToTurboRange = (
-  value: number,
-  min: number,
-  max: number
-): string => {
+const valueToTurboRange = (value: number, min: number, max: number): string => {
   const lerpedValue = (value - min) / (max - min);
   return interpolateTurbo(lerpedValue);
 };
@@ -71,8 +67,7 @@ function MapApiDataLayer({
   };
   */
 
-  const valueToColorFn = (value: number) =>
-    valueToTurboRange(value, min, max);
+  const valueToColorFn = (value: number) => valueToTurboRange(value, min, max);
 
   return (
     <>

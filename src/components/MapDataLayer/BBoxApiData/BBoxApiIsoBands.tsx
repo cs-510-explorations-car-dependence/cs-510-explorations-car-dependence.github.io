@@ -3,14 +3,12 @@ import ApiServerResponse, { DataField } from "../ApiServerResponse";
 import { GeoJSON } from "react-leaflet";
 import {
   point,
-  centroid,
   featureCollection,
   Feature,
   Point,
   Properties,
   isobands,
   FeatureCollection,
-  Geometry,
 } from "@turf/turf";
 import { StyleFunction } from "leaflet";
 
@@ -83,10 +81,7 @@ const createGeoJsonPoints = (
       roadInfo.segments.map((segment) =>
         segment.shape.map(([lat, lon]) => {
           const value = segment[dataField];
-          // const pt = point([lon, lat], { value });
           return point([lon, lat], { value });
-          // @ts-ignore
-          // return centroid(pt, { value });
         })
       )
     )
@@ -109,8 +104,8 @@ const createIsoBands = (
     feature: Feature<any, any> | undefined
   ) => {
     if (!feature) return {};
-    const rawValue = feature.properties!.cbreak;
-    const value = Number(rawValue);
+    // const rawValue = feature.properties!.cbreak;
+    // const value = Number(rawValue);
     const color = "red";
     return { color, fillColor: color, ...ISO_BAND_STYLE };
   };
