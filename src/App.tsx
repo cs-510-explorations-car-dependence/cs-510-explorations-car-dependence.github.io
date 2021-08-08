@@ -10,7 +10,7 @@ import MapApiDataLayer from "./components/MapDataLayer/MapDataLayer";
 // Otherwise fall back to production server
 const API_URL =
   process.env.NODE_ENV === "production" || !process.env.REACT_APP_API_URL
-    ? "https://car-dependence-backend.herokuapp.com/api/route/"
+    ? "https://car-dependence-backend.herokuapp.com"
     : process.env.REACT_APP_API_URL;
 if (process.env.NODE_ENV !== "production")
   console.info(`Using API endpoint ${API_URL}`);
