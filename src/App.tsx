@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./App.css";
 import Face from "../src/components/Face/Face";
 
