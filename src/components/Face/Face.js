@@ -6,7 +6,6 @@ import Nav from "../Nav/Nav";
 import Title from "../Titlepage/Title";
 import MapCom from "../Map/MapCom";
 import About from "../About/About";
-import { style } from "d3";
 
 
 export default class Face extends Component{
