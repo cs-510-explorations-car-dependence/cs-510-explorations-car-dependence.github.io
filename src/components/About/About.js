@@ -82,7 +82,7 @@ export default class About extends React.Component {
                     src={logo3}
                     alt="jam_factor_visulized"
               />
-              <h4>The HERE API calls give us a traffic indicator called the "jam factor". The jam factor is a floating-point number from 0.0 to 10.0, with higher numbers meaning more congestion.</h4>
+              <h4>The HERE API calls give us a traffic indicator called the "jam factor (JF)". The jam factor is a floating-point number from 0.0 to 10.0, with higher numbers meaning more congestion.</h4>
               <br></br>
               <hr></hr>
               <br></br>
@@ -91,31 +91,45 @@ export default class About extends React.Component {
             <table>
               <tr>
                 <th>LOS</th>
+                <th>JF min</th>
+                <th>JF max</th>
                 <th>average cars/lane/mile</th>
               </tr>
 
               <tr>
                 <td>A</td>
+                <td>0.00</td>
+                <td>1.66</td>
                 <td>11</td>
               </tr>
               <tr>
                 <td>B</td>
+                <td>1.66</td>
+                <td>3.33</td>
                 <td>18</td>
               </tr>
               <tr>
                 <td>C</td>
+                <td>3.33</td>
+                <td>5.00</td>
                 <td>26</td>
               </tr>
               <tr>
                 <td>D</td>
+                <td>5.00</td>
+                <td>6.66</td>
                 <td>35</td>
               </tr>
               <tr>
                 <td>E</td>
+                <td>6.66</td>
+                <td>8.33</td>
                 <td>45</td>
               </tr>
               <tr>
                 <td>F</td>
+                <td>8.33</td>
+                <td>10.0</td>
                 <td>200</td>
               </tr>
               
