@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from "../Nav/Nav";
 import Title from "../Titlepage/Title";
 import MapCom from "../Map/MapCom";
+import About from "../About/About";
+import { style } from "d3";
 
 
 export default class Face extends Component{
@@ -51,17 +53,20 @@ export default class Face extends Component{
     }
     render(){
 
-        
+       
 
-        
         return (
             <div>
                 <Nav action={this.handler}/>
                 {this.state.intro === true && <Title action={this.handler}/>}
+                {this.state.about === true && <About/>}
                 {this.state.map === true && <MapCom/>}
 
             </div>
         );
+        
+
+        
 
     }
 }

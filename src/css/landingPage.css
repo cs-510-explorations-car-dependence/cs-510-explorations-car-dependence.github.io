@@ -4,6 +4,7 @@ nav {
     color: white;
     align-items: center;
     height: 70px;
+    justify-content: center;
 }
 
 .navs {
@@ -32,35 +33,102 @@ nav {
 .navs li:hover{
   background-color:rgba(0,0,0,5);
   border-radius: 0.5em;
+  cursor: pointer;
 }
 
 .navs li a:hover {
   color: rgb(142, 241, 142) !important;  
 }
 
-.button{
-  padding: 0.35em 1.2em;
-  border:0.1em solid #FFFFFF;
-  margin:0 0.3em 0.3em 0;
-  border-radius:0.5em;
-  box-sizing: border-box;
-  text-decoration:none;
-  font-weight:300;
-  color:black;
-  text-align:center;
-  transition: all 0.2s;
-}
-
-
-
-.button:hover{
-  
-  color:#000000;
-  background-color:#FFFFFF;
-
-}
 
 .logo{
   width: 30%;
   height: auto;
+  margin-bottom: -1em;
+}
+
+.logo2{
+  width: 100%;
+  height: auto;
+  margin-bottom: -1em;
+  margin-top: -2em;
+}
+
+.logo3{
+  width: 80%;
+  height: auto;
+  margin-bottom: -4em;
+  margin-top: -4em;
+}
+
+.logo4{
+  cursor: pointer;
+}
+
+
+
+.tabs{
+  margin: 20px 0 10px 0;
+  width: 50%;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+
+.tabs:hover{
+  cursor: pointer;
+}
+
+table {
+  margin-right: auto;
+  margin-left: auto;
+  width: 30%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+
+  .navs{
+    justify-content: center;
+  }
+
+  .navs li{
+    margin: 0 !important;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  ul.navs{
+    padding: 0;
+  }
+  
+  .logo3{
+    
+    margin-bottom: -2em;
+    margin-top: -2em;
+  }
+
+  h4{
+    font-size: 1em !important;
+  }
+
+  .phrase{
+    font-size: x-small;
+    margin-top: 1vh;
+    font-style: italic;
+  }
+
 }
