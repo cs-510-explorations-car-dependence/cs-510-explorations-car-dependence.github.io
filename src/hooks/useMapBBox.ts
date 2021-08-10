@@ -9,12 +9,13 @@ function useBBox(map: Map) {
 
   const onMove = useCallback(() => {
     const center = map.getCenter();
+    // longitude can cause problem, since leaflet scrolls forever left/right and longitude grows/shrinks accordingly
     if (center.lng >= -180 && center.lng <= 180) {
       setBBox(map.getBounds());
+      // if its out of range, snap back to real-world coordinate
     } else {
-      const validLat = center.lat;
       const validLon = asValidLon(center.lng);
-      const newCenter = new LatLng(validLat, validLon);
+      const newCenter = new LatLng(center.lat, validLon);
       map.setView(newCenter, undefined, { animate: false });
     }
   }, [map]);
