@@ -9,12 +9,7 @@ function useBBox(map: Map) {
 
   const onMove = useCallback(() => {
     const center = map.getCenter();
-    if (
-      center.lat >= -90 &&
-      center.lat <= 90 &&
-      center.lng >= -180 &&
-      center.lng <= 180
-    ) {
+    if (center.lng >= -180 && center.lng <= 180) {
       setBBox(map.getBounds());
     } else {
       const validLat = center.lat;
@@ -22,10 +17,6 @@ function useBBox(map: Map) {
       const newCenter = new LatLng(validLat, validLon);
       map.setView(newCenter, undefined, { animate: false });
     }
-  }, [map]);
-
-  const onZoom = useCallback(() => {
-    setBBox(map.getBounds());
   }, [map]);
 
   // adds the required event listeners for Leaflet to handle this properly
@@ -36,7 +27,7 @@ function useBBox(map: Map) {
       map.off("moveend", onMove);
       map.off("zoomend", onMove);
     };
-  }, [map, onMove, onZoom]);
+  }, [map, onMove]);
 
   return bbox;
 }
