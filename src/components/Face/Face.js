@@ -17,6 +17,7 @@ export default class Face extends Component{
         intro: true,
         about: false,
         map: false,
+        navs: true,
     }
 
 
@@ -32,6 +33,7 @@ export default class Face extends Component{
                 intro: true,
                 about: false,
                 map: false,
+                navs: true,
             });
         }
         else if(arg === 2){
@@ -39,30 +41,50 @@ export default class Face extends Component{
                 intro: false,
                 about: true,
                 map: false,
+                navs: true,
             });  
+        }
+        else if(arg === 3){
+            this.setState({
+                intro: false,
+                about: false,
+                map: true,
+                navs: false,
+            });  
+            this.refs.navi.change();
         }
         else{
             this.setState({
                 intro: false,
                 about: false,
                 map: true,
+                navs: false,
             });  
+            
         }
 
     }
     render(){
 
-       
-
+        if(this.state.map === true){
+            return(
+                <div>
+                <Nav action={this.handler} nav_state={this.state.navs} ref="navi"/>
+                <MapCom/>
+                </div>
+            )
+        }
+        else{
         return (
             <div>
-                <Nav action={this.handler}/>
+
+                <Nav action={this.handler} nav_state={this.state.navs} ref="navi"/>
                 {this.state.intro === true && <Title action={this.handler}/>}
                 {this.state.about === true && <About/>}
-                {this.state.map === true && <MapCom/>}
 
             </div>
         );
+        }
         
 
         

@@ -69,7 +69,7 @@ export default class About extends React.Component {
                     alt="how_much_emission"
               />
 
-              <h4>With that in mind, we hope that everyone could have a look the roads around their neighborhood or any places in their mind and know how much emissions is produced there. </h4>
+              <h4>We encourage you to explore around your neighborhood, town, nearby city, and anywhere else. Learn about the emissions caused by roads near you and think about how it may impact your local air quality.</h4>
 
             </div>
           }

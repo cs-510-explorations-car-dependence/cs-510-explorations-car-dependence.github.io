@@ -109,6 +109,11 @@ tr:nth-child(even) {
     padding: 0;
     width: 100%;
     text-align: center;
+    border-radius: 0px;
+  }
+
+  .navs li:hover{
+    border-radius: 0;
   }
 
   ul.navs{

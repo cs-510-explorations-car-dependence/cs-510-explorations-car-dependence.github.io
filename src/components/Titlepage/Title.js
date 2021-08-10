@@ -25,7 +25,7 @@ export default class Title extends Component{
                 />
                 <h4 className="mb-3 phrase">See Road Emissions with a Click and a Drag</h4>
                 <div>
-                    <button className="btn btn-success" onClick={() => this.props.action(55)}>Let's roll</button>
+                    <button className="btn btn-success" onClick={() => this.props.action(3)}>Let's roll</button>
                 </div>
 
             </div>
